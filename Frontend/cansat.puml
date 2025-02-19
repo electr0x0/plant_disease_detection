@@ -1,0 +1,56 @@
+@startuml
+skinparam backgroundColor #f9f9f9
+skinparam nodeBackgroundColor #eaeaea
+skinparam cloudBackgroundColor #b3e5fc
+skinparam databaseBackgroundColor #ffd54f
+skinparam rectangleFontColor black
+skinparam shadowing true
+
+cloud "Client Device (Browser)" as Browser {
+  [Next.js Frontend Application]
+}
+
+node "Frontend Server (Node.js)" as Frontend {
+  [Next.js Application]
+  [Static Files]
+  note right of [Static Files]: Served to Browser
+}
+
+node "Backend Server (Python/Django)" as Backend {
+  [Django REST API]
+  [Authentication Service]
+  [Business Logic]
+}
+
+database "Database Server (PostgreSQL)" as Database {
+  [Users Table]
+  [Patients Table]
+  [Doctors Table]
+  [Appointments Table]
+}
+
+cloud "Cloud Storage (AWS S3)" as Storage {
+  [Uploaded Files]
+  [Diagnostic Reports]
+  [AI Model Outputs]
+}
+
+node "AI Processing Service (Docker)" as AI {
+  [Image Classification Model]
+  [Recommendation System]
+}
+
+node "Load Balancer" as LoadBalancer {
+  [Traffic Distributor]
+}
+
+' Relationships and Protocols
+Browser --> Frontend : HTTPS Requests
+Frontend --> Backend : REST API (HTTPS)
+Backend --> Database : SQL Queries
+Backend --> AI : API Calls (JSON over HTTP)
+Backend --> Storage : File Upload/Download (S3 Protocol)
+Frontend --> LoadBalancer : HTTPS
+Backend --> LoadBalancer : HTTPS
+AI --> Storage : File Reads/Writes
+@enduml
