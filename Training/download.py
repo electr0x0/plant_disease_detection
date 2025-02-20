@@ -1,6 +1,10 @@
+import os
 from roboflow import Roboflow
+import dotenv
 
-rf = Roboflow(api_key="TFwyt4fYTDxEKa1mbqRN")
+dotenv.load_dotenv()
+
+rf = Roboflow(api_key=os.getenv("ROBOFLOW_API_KEY"))
 project = rf.workspace("leaf-detection-7puag").project("diseasedleafdetection")
 version = project.version(1)
 dataset = version.download("yolov11")     

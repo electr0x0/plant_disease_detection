@@ -3,10 +3,9 @@ from ultralytics import YOLO
 from multiprocessing import freeze_support
 
 def main():
-    # Load a model
-    model = YOLO('yolov8m.pt')  # load a pretrained model
+    model = YOLO('yolo11m.pt')  # load a pretrained model
 
-    # Train the model
+    # Hyperparameters
     model.train(
         data='DiseasedLeafDetection-1/data.yaml',
         epochs=10,
@@ -49,7 +48,7 @@ def main():
     # Evaluate model performance on the validation set
     metrics = model.val()
 
-    # Perform object detection on an image
+    # Test the model
     results = model("Bacterial-Soft-Rot-of-Cauliflower-Head.jpg")
     results[0].show()
 
@@ -57,16 +56,16 @@ def main():
     path = model.export(format="onnx")  # return path to exported model
 
     # Save in multiple formats
-    # 1. PyTorch format (always good to keep)
+
     model.save('best.pt')
 
-    # 2. Export to TensorRT (best for NVIDIA GPU deployment)
+    # Export to TensorRT (best for NVIDIA GPU deployment)
     model.export(
         format='engine',
         device=0,
-        half=True,  # FP16 for faster inference
+        half=True,  # FP16
         simplify=True,
-        workspace=4,  # GB
+        workspace=4,
         verbose=True
     )
 
