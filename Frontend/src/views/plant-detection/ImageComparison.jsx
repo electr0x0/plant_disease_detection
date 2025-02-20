@@ -17,6 +17,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const ImageViewer = ({ image, onClose }) => {
   return (
@@ -99,6 +100,8 @@ const ImageViewer = ({ image, onClose }) => {
 }
 
 const ConfigurationPanel = ({ config, onChange, modelType }) => {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   if (modelType !== 'detection') return null
 
   return (
@@ -110,126 +113,149 @@ const ConfigurationPanel = ({ config, onChange, modelType }) => {
         borderRadius: '0 0 12px 12px'
       }}
     >
-      <Typography variant='h6' sx={{ mb: 4, fontWeight: 600, color: 'primary.main' }}>
-        <i className='tabler-adjustments me-2'></i>
-        Detection Configuration
-      </Typography>
-      <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
-          <Box
-            sx={{
-              p: 3,
-              borderRadius: 1,
-              backgroundColor: theme => theme.palette.background.paper,
-              boxShadow: theme => `0 0 0 1px ${theme.palette.divider}`,
-              transition: 'box-shadow 0.2s',
-              '&:hover': {
-                boxShadow: 3
-              }
-            }}
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          cursor: 'pointer',
+          '&:hover': { opacity: 0.8 }
+        }}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <Typography variant='h6' sx={{ mb: 0, fontWeight: 600, color: 'primary.main' }}>
+          <i className='tabler-adjustments me-2'></i>
+          Detection Configuration
+        </Typography>
+        <i className={`tabler-chevron-${isExpanded ? 'up' : 'down'} ms-2`}></i>
+      </Box>
+
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <i className='tabler-grid-dots me-2 text-primary'></i>
-              <Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
-                Tile Size
-              </Typography>
-            </Box>
-            <Typography variant='caption' color='text.secondary' sx={{ display: 'block', mb: 3 }}>
-              Size of image tiles for processing (32-2048px)
-            </Typography>
-            <Typography sx={{ mb: 1 }}>{config.tile_size}px</Typography>
-            <Slider
-              value={config.tile_size}
-              onChange={(_, value) => onChange('tile_size', value)}
-              min={32}
-              max={2048}
-              step={32}
-              marks={[
-                { value: 32, label: '32' },
-                { value: 640, label: '640' },
-                { value: 2048, label: '2048' }
-              ]}
-              sx={{ color: 'primary.main' }}
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Box
-            sx={{
-              p: 3,
-              borderRadius: 1,
-              backgroundColor: theme => theme.palette.background.paper,
-              boxShadow: theme => `0 0 0 1px ${theme.palette.divider}`,
-              transition: 'box-shadow 0.2s',
-              '&:hover': {
-                boxShadow: 3
-              }
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <i className='tabler-layers-intersect me-2 text-primary'></i>
-              <Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
-                Overlap
-              </Typography>
-            </Box>
-            <Typography variant='caption' color='text.secondary' sx={{ display: 'block', mb: 3 }}>
-              Overlap between tiles (0-90%)
-            </Typography>
-            <Typography sx={{ mb: 1 }}>{(config.overlap * 100).toFixed(0)}%</Typography>
-            <Slider
-              value={config.overlap}
-              onChange={(_, value) => onChange('overlap', value)}
-              min={0}
-              max={0.9}
-              step={0.1}
-              marks={[
-                { value: 0, label: '0%' },
-                { value: 0.5, label: '50%' },
-                { value: 0.9, label: '90%' }
-              ]}
-              sx={{ color: 'primary.main' }}
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Box
-            sx={{
-              p: 3,
-              borderRadius: 1,
-              backgroundColor: theme => theme.palette.background.paper,
-              boxShadow: theme => `0 0 0 1px ${theme.palette.divider}`,
-              transition: 'box-shadow 0.2s',
-              '&:hover': {
-                boxShadow: 3
-              }
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <i className='tabler-gauge me-2 text-primary'></i>
-              <Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
-                Confidence Threshold
-              </Typography>
-            </Box>
-            <Typography variant='caption' color='text.secondary' sx={{ display: 'block', mb: 3 }}>
-              Minimum confidence level for detection (0-100%)
-            </Typography>
-            <Typography sx={{ mb: 1 }}>{(config.conf_threshold * 100).toFixed(0)}%</Typography>
-            <Slider
-              value={config.conf_threshold}
-              onChange={(_, value) => onChange('conf_threshold', value)}
-              min={0}
-              max={1}
-              step={0.05}
-              marks={[
-                { value: 0, label: '0%' },
-                { value: 0.5, label: '50%' },
-                { value: 1, label: '100%' }
-              ]}
-              sx={{ color: 'primary.main' }}
-            />
-          </Box>
-        </Grid>
-      </Grid>
+            <Grid container spacing={6} sx={{ pt: 4 }}>
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    borderRadius: 1,
+                    backgroundColor: theme => theme.palette.background.paper,
+                    boxShadow: theme => `0 0 0 1px ${theme.palette.divider}`,
+                    transition: 'box-shadow 0.2s',
+                    '&:hover': {
+                      boxShadow: 3
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <i className='tabler-grid-dots me-2 text-primary'></i>
+                    <Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
+                      Tile Size
+                    </Typography>
+                  </Box>
+                  <Typography variant='caption' color='text.secondary' sx={{ display: 'block', mb: 3 }}>
+                    Size of image tiles for processing (32-2048px)
+                  </Typography>
+                  <Typography sx={{ mb: 1 }}>{config.tile_size}px</Typography>
+                  <Slider
+                    value={config.tile_size}
+                    onChange={(_, value) => onChange('tile_size', value)}
+                    min={32}
+                    max={2048}
+                    step={32}
+                    marks={[
+                      { value: 32, label: '32' },
+                      { value: 640, label: '640' },
+                      { value: 2048, label: '2048' }
+                    ]}
+                    sx={{ color: 'primary.main' }}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    borderRadius: 1,
+                    backgroundColor: theme => theme.palette.background.paper,
+                    boxShadow: theme => `0 0 0 1px ${theme.palette.divider}`,
+                    transition: 'box-shadow 0.2s',
+                    '&:hover': {
+                      boxShadow: 3
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <i className='tabler-layers-intersect me-2 text-primary'></i>
+                    <Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
+                      Overlap
+                    </Typography>
+                  </Box>
+                  <Typography variant='caption' color='text.secondary' sx={{ display: 'block', mb: 3 }}>
+                    Overlap between tiles (0-90%)
+                  </Typography>
+                  <Typography sx={{ mb: 1 }}>{(config.overlap * 100).toFixed(0)}%</Typography>
+                  <Slider
+                    value={config.overlap}
+                    onChange={(_, value) => onChange('overlap', value)}
+                    min={0}
+                    max={0.9}
+                    step={0.1}
+                    marks={[
+                      { value: 0, label: '0%' },
+                      { value: 0.5, label: '50%' },
+                      { value: 0.9, label: '90%' }
+                    ]}
+                    sx={{ color: 'primary.main' }}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    borderRadius: 1,
+                    backgroundColor: theme => theme.palette.background.paper,
+                    boxShadow: theme => `0 0 0 1px ${theme.palette.divider}`,
+                    transition: 'box-shadow 0.2s',
+                    '&:hover': {
+                      boxShadow: 3
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <i className='tabler-gauge me-2 text-primary'></i>
+                    <Typography variant='subtitle1' sx={{ fontWeight: 600 }}>
+                      Confidence Threshold
+                    </Typography>
+                  </Box>
+                  <Typography variant='caption' color='text.secondary' sx={{ display: 'block', mb: 3 }}>
+                    Minimum confidence level for detection (0-100%)
+                  </Typography>
+                  <Typography sx={{ mb: 1 }}>{(config.conf_threshold * 100).toFixed(0)}%</Typography>
+                  <Slider
+                    value={config.conf_threshold}
+                    onChange={(_, value) => onChange('conf_threshold', value)}
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    marks={[
+                      { value: 0, label: '0%' },
+                      { value: 0.5, label: '50%' },
+                      { value: 1, label: '100%' }
+                    ]}
+                    sx={{ color: 'primary.main' }}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Box>
   )
 }

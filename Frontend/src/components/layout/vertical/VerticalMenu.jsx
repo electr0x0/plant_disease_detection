@@ -59,6 +59,9 @@ const VerticalMenu = ({ scrollMenu }) => {
         <MenuItem href='/home' icon={<i className='tabler-space' />}>
           PDD Home
         </MenuItem>
+        <MenuItem href='/metrics' icon={<i className='tabler-chart-dots' />}>
+          Plant Metrics
+        </MenuItem>
       </Menu>
       {/* <Menu
           popoutMenuOffset={{ mainAxis: 23 }}

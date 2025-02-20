@@ -1,8 +1,7 @@
-from fastapi import APIRouter, WebSocket
+from fastapi import APIRouter
 from typing import List
 import random
 from datetime import datetime
-import asyncio
 from app.schemas.metrics import PlantMetric, PlantMetricType
 
 router = APIRouter()
@@ -37,25 +36,4 @@ async def generate_plant_metrics() -> List[PlantMetric]:
 
 @router.get("/plant-metrics", response_model=List[PlantMetric])
 async def get_plant_metrics():
-    return await generate_plant_metrics()
-
-@router.websocket("/ws/plant-metrics")
-async def websocket_endpoint(websocket: WebSocket):
-    try:
-        await websocket.accept()
-        while True:
-            try:
-                metrics = await generate_plant_metrics()
-                await websocket.send_json([metric.dict() for metric in metrics])
-                await asyncio.sleep(5)
-            except RuntimeError as e:
-                if "close message has been sent" in str(e):
-                    break
-                raise e
-    except Exception as e:
-        print(f"WebSocket error: {e}")
-    finally:
-        try:
-            await websocket.close()
-        except RuntimeError:
-            pass  # Ignore if already closed 
+    return await generate_plant_metrics() 

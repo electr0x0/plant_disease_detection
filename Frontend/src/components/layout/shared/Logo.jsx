@@ -9,7 +9,8 @@ import styled from '@emotion/styled'
 // Component Imports
 import themeConfig from '@configs/themeConfig'
 import { useSettings } from '@core/hooks/useSettings'
-import PlantDiseaseDetectionLogo from '@core/svg/Logo'
+
+import Image from 'next/image'
 
 // Config Imports
 
@@ -57,7 +58,7 @@ const Logo = ({ color }) => {
 
   return (
     <div className='flex items-center'>
-      <PlantDiseaseDetectionLogo className='text-2xl text-primary' />
+      <Image src={'/images/logo.svg'} width={50} height={50} alt='Plant Disease Detection Logo' className='text-2xl text-primary' />
       <LogoText
         color={color}
         ref={logoTextRef}

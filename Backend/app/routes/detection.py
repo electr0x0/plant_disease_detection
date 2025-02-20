@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 import base64
 from app.schemas.detection import DetectionResponse, ImageUpload
-from app.services.predict import TiledPredictor
+
 from app.config import BASE_DIR
 
 router = APIRouter()
@@ -17,6 +17,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 @router.post("/detect", response_model=DetectionResponse)
 async def detect_disease(image_data: ImageUpload):
     try:
+        from app.services.predict import TiledPredictor
         predictor = TiledPredictor(
             model_path=os.path.join(BASE_DIR, 'services/models/cauliflower_model.pt'),
             tile_size=image_data.tile_size,

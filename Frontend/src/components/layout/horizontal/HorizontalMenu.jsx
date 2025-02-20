@@ -71,11 +71,17 @@ const HorizontalMenu = () => {
           menuSectionStyles: verticalMenuSectionStyles(verticalNavOptions, theme)
         }}
       >
-        <MenuItem href='/' icon={<i className='tabler-smart-home' />}>
+        <MenuItem href='/home' icon={<i className='tabler-smart-home' />}>
           Home
         </MenuItem>
-        <MenuItem href='/about' icon={<i className='tabler-info-circle' />}>
-          About
+        <MenuItem href='/metrics' icon={<i className='tabler-chart-dots' />}>
+          Plant Metrics
+        </MenuItem>
+        <MenuItem href='/gemini' icon={<i className='tabler-brain' />}>
+          AI Analysis
+        </MenuItem>
+        <MenuItem href='/chat' icon={<i className='tabler-messages' />}>
+          Expert Chat
         </MenuItem>
       </Menu>
       {/* <Menu

@@ -1,15 +1,15 @@
-// src/views/PlantDetectionDashboard.jsx
 import { useState, useEffect, useRef } from 'react'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
 
 import ImageComparison from '@/views/plant-detection/ImageComparison'
 import DetectionMetrics from '@/views/plant-detection/DetectionMetrics'
-import PlantMetricsChart from '@/views/plant-detection/PlantMetricsChart'
-import MetricsCards from '@/views/plant-detection/MetricsCards'
+import GeminiAnalysis from '@/views/plant-detection/GeminiAnalysis'
 
 const Input = styled('input')({
   display: 'none'
@@ -110,39 +110,6 @@ const PlantDetectionDashboard = () => {
     reader.readAsDataURL(file)
   }
 
-  useEffect(() => {
-    // Connect to WebSocket for real-time metrics
-    const ws = new WebSocket('ws://localhost:8000/ws/plant-metrics')
-
-    ws.onopen = () => {
-      console.log('WebSocket Connected')
-    }
-
-    ws.onmessage = event => {
-      try {
-        const data = JSON.parse(event.data)
-
-        setMetrics(data)
-      } catch (error) {
-        console.error('WebSocket message error:', error)
-      }
-    }
-
-    ws.onerror = error => {
-      console.error('WebSocket error:', error)
-    }
-
-    ws.onclose = () => {
-      console.log('WebSocket Disconnected')
-    }
-
-    return () => {
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.close()
-      }
-    }
-  }, [])
-
   // Handle device selection and stream
   useEffect(() => {
     async function setupStream() {
@@ -240,10 +207,6 @@ const PlantDetectionDashboard = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <MetricsCards metrics={metrics} />
-      </Grid>
-
-      <Grid item xs={12}>
         <ImageComparison
           originalImage={originalImage}
           processedImage={processedImage}
@@ -264,32 +227,34 @@ const PlantDetectionDashboard = () => {
 
       <Grid item xs={12}>
         <Card>
-          <CardContent>
-            {captureMode === 'upload' ? (
-              <label htmlFor='upload-image'>
-                <Input accept='image/*' id='upload-image' type='file' onChange={handleImageUpload} />
-                <Button variant='contained' component='span' size='large' fullWidth>
-                  <i className='tabler-upload me-2'></i>
-                  Upload Plant Image
-                </Button>
-              </label>
-            ) : (
-              <Button variant='contained' size='large' fullWidth onClick={handleCapture} disabled={!isStreaming}>
-                <i className='tabler-camera me-2'></i>
-                Capture and Detect
-              </Button>
-            )}
+          <CardContent sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid container spacing={2} justifyContent="center" sx={{ maxWidth: '500px' }}>
+              <Grid item xs={12}>
+                {captureMode === 'upload' ? (
+                  <label htmlFor='upload-image'>
+                    <Input accept='image/*' id='upload-image' type='file' onChange={handleImageUpload} />
+                    <Button variant='contained' component='span' size='large' fullWidth>
+                      <i className='tabler-upload me-2'></i>
+                      Upload Plant Image
+                    </Button>
+                  </label>
+                ) : (
+                  <Button variant='contained' size='large' fullWidth onClick={handleCapture} disabled={!isStreaming}>
+                    <i className='tabler-camera me-2'></i>
+                    Capture and Detect
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <DetectionMetrics detections={detections} />
       </Grid>
 
-      <Grid item xs={12} md={6}>
-        <PlantMetricsChart metrics={metrics} />
-      </Grid>
+      
     </Grid>
   )
 }

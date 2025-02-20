@@ -1,52 +1,52 @@
-// Primary color config object with nature-inspired colors
+// Primary color config object with nature-inspired theme
 const primaryColorConfig = [
   {
     name: 'primary-1',
-    light: '#4CAF50', // Fresh Green
+    light: '#E8F5E9', // Soft Mint
     main: '#2E7D32', // Forest Green
-    dark: '#1B5E20' // Deep Green
+    dark: '#1B5E20'  // Deep Forest
   },
   {
     name: 'primary-2',
-    light: '#81C784', // Leaf Green
-    main: '#43A047', // Vibrant Green
-    dark: '#2E7D32' // Forest Green
+    light: '#F1F8E9', // Leaf Light
+    main: '#558B2F', // Olive Green
+    dark: '#33691E'  // Dark Olive
   },
   {
     name: 'primary-3',
-    light: '#FFB74D', // Warm Orange
-    main: '#F57C00', // Alert Orange
-    dark: '#E65100' // Deep Orange
+    light: '#E8F6EF', // Fresh Sage
+    main: '#388E3C', // Garden Green
+    dark: '#1B5E20'  // Deep Garden
   },
   {
     name: 'primary-4',
-    light: '#E57373', // Soft Red
-    main: '#D32F2F', // Warning Red
-    dark: '#B71C1C' // Deep Red
+    light: '#DCEDC8', // Spring Light
+    main: '#689F38', // Spring Green
+    dark: '#33691E'  // Deep Spring
   },
   {
     name: 'primary-5',
-    light: '#64B5F6', // Sky Blue
-    main: '#1E88E5', // Water Blue
-    dark: '#1565C0' // Deep Blue
+    light: '#F9FBE7', // Natural Light
+    main: '#827717', // Earth Tone
+    dark: '#3E2723'  // Rich Soil
   },
   {
     name: 'primary-6',
-    light: '#9575CD', // Lavender
-    main: '#5E35B1', // Purple
-    dark: '#4527A0' // Deep Purple
+    light: '#E0F2F1', // Fresh Mint
+    main: '#004D40', // Deep Teal
+    dark: '#00251A'  // Forest Night
   },
   {
     name: 'primary-7',
-    light: '#4DB6AC', // Teal Light
-    main: '#00897B', // Teal
-    dark: '#00695C' // Teal Dark
+    light: '#F1F8E9', // Morning Dew
+    main: '#33691E', // Moss Green
+    dark: '#1B5E20'  // Deep Moss
   },
   {
     name: 'primary-8',
-    light: '#90A4AE', // Blue Grey
-    main: '#546E7A', // Neutral
-    dark: '#37474F' // Dark Grey
+    light: '#EDF7ED', // Soft Leaf
+    main: '#1B5E20', // Evergreen
+    dark: '#0A2F0A'  // Dark Forest
   }
 ]
 

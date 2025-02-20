@@ -22,9 +22,9 @@ const themeConfig = {
   mode: 'system', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
   semiDark: false, // true, false
-  layout: 'vertical', // 'vertical', 'collapsed', 'horizontal'
+  layout: 'horizontal', // 'vertical', 'collapsed', 'horizontal'
   layoutPadding: 12, // Common padding for header, content, footer layout components (in px)
-  compactContentWidth: 1440, // in px
+  compactContentWidth: 1640, // in px
   navbar: {
     type: 'fixed', // 'fixed', 'static'
     contentWidth: 'compact', // 'compact', 'wide'
