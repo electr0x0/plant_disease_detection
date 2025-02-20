@@ -2,7 +2,7 @@
 
 An advanced plant disease detection and analysis system that combines computer vision, AI-powered plant analysis, and expert chat capabilities to help identify and manage plant diseases.
 
-![Main Dashboard](https://i.ibb.co.com/Lz74XD13/image.png)
+![Main Dashboard](Screenshots/dash.png)
 
 ## Features
 
@@ -37,13 +37,13 @@ The system consists of three main components:
 ## Screenshots
 
 ### Plant Analysis
-![Plant Analysis](https://i.ibb.co.com/W4pskzs9/image.png)
+![Plant Analysis](Screenshots/plant_analysis.png)
 
 ### Agentic Chat
-![Agentic Chat](https://i.ibb.co.com/Y4K90zd7/image.png)
+![Agentic Chat](Screenshots/chat.png)
 
 ### Plant Metrics
-![Plant Metrics](https://i.ibb.co.com/QFGVwc6m/image.png)
+![Plant Metrics](Screenshots/metrics.png)
 
 
 ## Technology Stack
