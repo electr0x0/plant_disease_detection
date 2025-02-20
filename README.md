@@ -58,12 +58,12 @@ The system consists of three main components:
 ### Backend
 - FastAPI
 - OpenCV
-- Ultralytics YOLOv8
+- Ultralytics YOLOv11
 - Google Gemini AI
 - Groq LLM
 
 ### AI/ML
-- YOLOv8 for object detection
+- YOLOv11 for object detection
 - Custom-trained disease detection model
 - Gemini Vision AI for image analysis
 
